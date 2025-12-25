@@ -140,6 +140,8 @@ Chat with CyberGuard for cybersecurity advice, threat information, and security 
 4. Help protect the community
 
 ---
+## 📁 Project Image
+<img width="1919" height="876" alt="image" src="https://github.com/user-attachments/assets/cb363b42-c0a9-4581-ac77-119c8fcad951" />
 
 ## 📁 Project Structure
 
