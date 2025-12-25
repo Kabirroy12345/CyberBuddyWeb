@@ -1,65 +1,85 @@
 <div align="center">
 
-# 🛡️ CyberGuard Web Assistant
+# 🛡️ CyberGuard v3.0
 
-<img src="https://img.shields.io/badge/version-2.0-00ff00?style=for-the-badge&labelColor=0a192f" alt="Version">
+<img src="https://img.shields.io/badge/version-3.0-00ff00?style=for-the-badge&labelColor=0a192f" alt="Version">
 <img src="https://img.shields.io/badge/Python-3.9+-3776ab?style=for-the-badge&logo=python&logoColor=white" alt="Python">
 <img src="https://img.shields.io/badge/Flask-2.0+-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
-<img src="https://img.shields.io/badge/Gemini_AI-Powered-4285f4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini AI">
+<img src="https://img.shields.io/badge/Gemini_AI-2.5_Flash-4285f4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini AI">
 <img src="https://img.shields.io/badge/License-MIT-ffd700?style=for-the-badge" alt="License">
 
 <br><br>
 
-<p align="center">
-  <strong>🔒 Your AI-Powered Cybersecurity Companion</strong>
-</p>
+**🔒 AI-Powered Cybersecurity Assistant**
 
-<p align="center">
-  An advanced web-based security assistant featuring real-time link verification, AI-powered threat analysis, and community-driven threat reporting — all wrapped in a stunning cyberpunk interface.
+<p>
+A comprehensive web-based security platform featuring AI-powered threat detection, URL analysis, password strength evaluation, and real-time threat intelligence — wrapped in a stunning cyberpunk interface.
 </p>
 
 ---
 
-<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png" alt="line" width="100%">
-
 </div>
 
-## ⚡ Features
+## ⚡ Key Features
 
 <table>
 <tr>
 <td width="50%">
 
-### 🤖 AI-Powered Chat
-- Intelligent conversations powered by **Google Gemini Pro**
-- Get cybersecurity advice and answers
-- Real-time threat awareness tips
+### 🤖 AI Cybersecurity Advisor
+- Powered by **Google Gemini 2.5 Flash**
+- Cybersecurity-focused responses
+- Threat awareness tips & guidance
+- Incident response assistance
 
 </td>
 <td width="50%">
 
-### 🔍 Link Scanner
-- Verify URLs using **Google Safe Browsing API**
-- Detects malware, phishing, and social engineering
-- Instant safety verification results
+### 🔍 AI URL Threat Analysis
+- Machine learning-based threat detection
+- Phishing pattern recognition
+- Domain reputation analysis
+- Risk scoring (0-100)
 
 </td>
 </tr>
 <tr>
 <td width="50%">
 
-### 🚨 Threat Reporting
-- Report suspicious links to the community
-- SQLite-backed reporting system
-- Tracks reporter info and timestamps
+### 🔐 Password Strength Analyzer
+- Entropy calculation
+- Common password detection
+- Character variety scoring
+- Real-time feedback
 
 </td>
 <td width="50%">
 
-### 🎨 Cyberpunk UI
-- Matrix-inspired design with neon aesthetics
-- Responsive and modern interface
-- Animated visual effects
+### 📊 Threat Intelligence Dashboard
+- Real-time statistics
+- Scan history tracking
+- Threat trend visualization
+- Community reports
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🚨 Threat Reporting System
+- Community-driven threat database
+- Categorized threat types
+- User attribution
+- Timestamp tracking
+
+</td>
+<td width="50%">
+
+### 🎨 Modern Cyberpunk UI
+- Responsive glass-morphism design
+- Real-time animations
+- Mobile-friendly layout
+- Dark theme optimized
 
 </td>
 </tr>
@@ -69,79 +89,55 @@
 
 ## 🛠️ Tech Stack
 
-<div align="center">
-
 | Layer | Technology |
-|:---:|:---|
+|:---|:---|
 | 🎨 **Frontend** | HTML5, CSS3, JavaScript, Font Awesome |
-| ⚙️ **Backend** | Python, Flask |
-| 🧠 **AI** | Google Gemini Pro API |
-| 🔐 **Security** | Google Safe Browsing API |
-| 🗄️ **Database** | SQLite |
-
-</div>
+| ⚙️ **Backend** | Python 3.9+, Flask |
+| 🧠 **AI Engine** | Google Gemini 2.5 Flash API |
+| �️ **Database** | SQLite (scan history, reports, analytics) |
+| � **Security** | AI-powered threat analysis, entropy calculation |
 
 ---
 
 ## 🚀 Quick Start
 
-### Prerequisites
-
 ```bash
-Python 3.9 or higher
-pip (Python package installer)
-```
-
-### Installation
-
-1️⃣ **Clone the repository**
-```bash
+# 1. Clone the repository
 git clone https://github.com/Kabirroy12345/CyberBuddyWeb.git
 cd CyberBuddyWeb
-```
 
-2️⃣ **Install dependencies**
-```bash
-pip install flask google-generativeai requests
-```
+# 2. Install dependencies
+pip install flask google-genai requests
 
-3️⃣ **Run the application**
-```bash
+# 3. Run the application
 python app.py
-```
 
-4️⃣ **Open in browser**
-```
-http://localhost:5000
+# 4. Open in browser
+# http://localhost:5000
 ```
 
 ---
 
-## 📖 Usage Guide
+## 📖 Feature Guide
 
-<div align="center">
+### 💬 AI Chat Assistant
+Chat with CyberGuard for cybersecurity advice, threat information, and security best practices.
 
-| Button | Function | Description |
-|:---:|:---:|:---|
-| `🖥️ Execute` | Send Message | Chat with the AI assistant |
-| `🔍 Scan` | Verify Link | Check if a URL is safe |
-| `⚠️ Report` | Report Threat | Report suspicious links |
+### � URL Scanner
+1. Click **Scan URL**
+2. Enter any URL
+3. Get AI-powered threat analysis with risk score
 
-</div>
+### � Password Analyzer
+1. Enter password in sidebar
+2. Get real-time strength feedback
+3. View improvement suggestions
 
-### 💬 Chatting with CyberGuard
-Simply type your message in the input field and click **Execute** or press **Enter**. The AI will respond with helpful cybersecurity guidance.
-
-### 🔗 Verifying Links
-1. Click the **Scan** button
-2. Enter the URL you want to verify
-3. Get instant results: ✅ Safe or 🚨 Dangerous
-
-### 📝 Reporting Suspicious Links
-1. Click the **Report** button
-2. Enter the suspicious URL
-3. Provide your username
-4. Link is saved to the database for review
+### � Report Threats
+1. Click **Report**
+2. Enter suspicious URL
+3. Categorize threat type
+4. Help protect the community
 
 ---
 
@@ -149,27 +145,23 @@ Simply type your message in the input field and click **Execute** or press **Ent
 
 ```
 CyberBuddyWeb/
-├── 📄 app.py          # Flask backend server
-├── 📄 app.js          # Frontend JavaScript logic
-├── 📄 index.html      # Main UI with embedded CSS
-├── 📄 fetch_data.py   # Data fetching utilities
-├── 🗄️ database.db     # SQLite database
-└── 📖 README.md       # Documentation
+├── app.py           # Flask backend with AI integration
+├── index.html       # Main UI with dashboard
+├── app.js           # Frontend logic
+├── database.db      # SQLite database
+└── README.md        # Documentation
 ```
 
 ---
 
-## 🔐 API Integration
+## � Research Applications
 
-### Google Gemini AI
-The chatbot is powered by **Google Gemini Pro** for intelligent, context-aware responses.
-
-### Google Safe Browsing
-Link verification uses the **Google Safe Browsing API** to detect:
-- 🦠 Malware
-- 🎣 Phishing/Social Engineering
-- ⚠️ Unwanted Software
-- ☠️ Potentially Harmful Applications
+This project can be used for academic research in:
+- **AI-powered Cybersecurity** - Demonstrating LLM applications in threat detection
+- **URL Threat Classification** - AI-based phishing and malware detection
+- **Password Security Analysis** - Entropy-based strength evaluation
+- **Human-Computer Interaction** - Modern security UI/UX design
+- **Community Threat Intelligence** - Crowdsourced threat reporting systems
 
 ---
 
@@ -189,21 +181,15 @@ Link verification uses the **Google Safe Browsing API** to detect:
 
 ## 📜 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+MIT License - See [LICENSE](LICENSE) for details.
 
 ---
 
 <div align="center">
 
-### 🌟 Star this repo if you found it helpful!
-
-<br>
+**🛡️ Stay Safe • Stay Secure • Stay Cyber**
 
 <img src="https://img.shields.io/badge/Made%20with-❤️-ff004c?style=for-the-badge" alt="Made with love">
-<img src="https://img.shields.io/badge/Secured%20by-CyberGuard-00ff00?style=for-the-badge" alt="Secured">
-
-<br><br>
-
-**[ 🔐 Stay Safe • Stay Secure • Stay Cyber ]**
+<img src="https://img.shields.io/badge/Powered%20by-Gemini_AI-4285f4?style=for-the-badge" alt="Gemini">
 
 </div>

@@ -3,163 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberGuard Web Assistant</title>
+    <title>CyberGuard v3.0 - AI Security Assistant</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Moving CSS inline to keep everything together */
         :root {
             --primary-color: #0a192f;
             --secondary-color: #00ff00;
             --accent-color: #ff004c;
-            --success-color: #00b894;
             --warning-color: #ffd700;
+            --danger-color: #ff3333;
+            --safe-color: #00ff00;
             --text-light: #e6f1ff;
-            --text-dark: #0a192f;
             --cyber-gradient: linear-gradient(135deg, #0a192f 0%, #172a45 100%);
-            --matrix-color: #00ff00;
+            --glass-bg: rgba(10, 25, 47, 0.85);
         }
 
-        @keyframes matrix-rain {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 0% 100%; }
-        }
-
-        @keyframes scanline {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(0, 255, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--secondary-color); }
+            50% { box-shadow: 0 0 20px var(--secondary-color), 0 0 30px var(--secondary-color); }
         }
 
         body {
-            font-family: 'Courier New', monospace;
+            font-family: 'Segoe UI', 'Courier New', monospace;
             background: var(--cyber-gradient);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 20px;
-            position: relative;
-            overflow: hidden;
-            margin: 0;
+            color: var(--text-light);
         }
 
-        .binary-pattern {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .main-container {
             width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(45deg,
-                transparent,
-                transparent 10px,
-                rgba(0, 255, 0, 0.02) 10px,
-                rgba(0, 255, 0, 0.02) 20px);
-            pointer-events: none;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+            animation: slideIn 0.5s ease;
         }
 
+        /* Stats Dashboard */
+        .stats-dashboard {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .stat-card i {
+            font-size: 1.5em;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.75em;
+            color: rgba(230, 241, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chat Container */
         .chat-container {
-            width: 1000px;
-            max-width: 100%;
-            background: rgba(10, 25, 47, 0.95);
-            border: 2px solid var(--matrix-color);
+            background: var(--glass-bg);
+            border: 2px solid var(--secondary-color);
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
             overflow: hidden;
-            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .chat-header {
             padding: 20px;
             background: rgba(0, 255, 0, 0.1);
-            color: var(--matrix-color);
+            border-bottom: 2px solid var(--secondary-color);
             text-align: center;
-            border-bottom: 2px solid var(--matrix-color);
         }
 
         .chat-header h1 {
-            font-size: 1.6em;
-            margin: 0 0 8px 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            color: var(--secondary-color);
+            font-size: 1.5em;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .chat-header h1 .version {
+            font-size: 0.5em;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .chat-header small {
+            color: rgba(0, 255, 0, 0.7);
+            font-size: 0.8em;
         }
 
         .chat-box {
-            height: 350px;
+            flex: 1;
+            height: 400px;
             overflow-y: auto;
             padding: 20px;
-            background: rgba(10, 25, 47, 0.8);
+            background: rgba(10, 25, 47, 0.5);
         }
 
         .message {
             max-width: 85%;
             margin-bottom: 15px;
-            padding: 15px 20px;
-            border-radius: 10px;
-            position: relative;
+            padding: 12px 16px;
+            border-radius: 12px;
+            animation: slideIn 0.3s ease;
+            line-height: 1.5;
         }
 
         .user-message {
-            background: rgba(0, 255, 0, 0.1);
-            color: var(--matrix-color);
+            background: rgba(0, 255, 0, 0.15);
+            color: var(--secondary-color);
             margin-left: auto;
-            border: 1px solid var(--matrix-color);
+            border: 1px solid rgba(0, 255, 0, 0.3);
         }
 
         .bot-message {
-            background: rgba(230, 241, 255, 0.05);
+            background: rgba(230, 241, 255, 0.1);
             color: var(--text-light);
             margin-right: auto;
             border: 1px solid rgba(230, 241, 255, 0.2);
         }
 
+        .bot-message.danger {
+            border-color: var(--danger-color);
+            background: rgba(255, 51, 51, 0.1);
+        }
+
+        .bot-message.warning {
+            border-color: var(--warning-color);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .bot-message.safe {
+            border-color: var(--safe-color);
+            background: rgba(0, 255, 0, 0.1);
+        }
+
         .input-area {
-            padding: 20px;
+            padding: 15px;
             background: rgba(10, 25, 47, 0.9);
-            border-top: 2px solid var(--matrix-color);
+            border-top: 1px solid rgba(0, 255, 0, 0.3);
         }
 
         .input-group {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 10px;
         }
 
-        input {
+        input[type="text"], input[type="password"] {
             flex: 1;
-            padding: 15px 20px;
+            padding: 12px 15px;
             background: rgba(230, 241, 255, 0.05);
-            border: 1px solid var(--matrix-color);
-            border-radius: 5px;
-            color: var(--matrix-color);
-            font-family: 'Courier New', monospace;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 8px;
+            color: var(--secondary-color);
+            font-family: inherit;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
         }
 
         .action-buttons {
-            display: flex;
-            gap: 12px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
         }
 
         button {
-            padding: 12px 20px;
+            padding: 12px 15px;
             background: transparent;
-            border: 1px solid var(--matrix-color);
-            color: var(--matrix-color);
-            border-radius: 5px;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            border-radius: 8px;
             cursor: pointer;
-            font-family: 'Courier New', monospace;
+            font-family: inherit;
+            font-size: 0.85em;
             text-transform: uppercase;
             letter-spacing: 1px;
-            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -168,73 +242,285 @@
         }
 
         button:hover {
-            background: rgba(0, 255, 0, 0.1);
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            background: rgba(0, 255, 0, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
         }
 
-        .security-stats {
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.primary {
+            background: rgba(0, 255, 0, 0.2);
+            grid-column: 1 / -1;
+        }
+
+        button.danger {
+            border-color: var(--danger-color);
+            color: var(--danger-color);
+        }
+
+        button.danger:hover {
+            background: rgba(255, 51, 51, 0.15);
+        }
+
+        button.warning {
+            border-color: var(--warning-color);
+            color: var(--warning-color);
+        }
+
+        /* Sidebar */
+        .sidebar {
             display: flex;
-            justify-content: space-around;
-            padding: 10px;
-            border-top: 1px solid rgba(0, 255, 0, 0.2);
-            font-size: 0.8em;
-            color: var(--matrix-color);
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .encryption-indicator {
+        .sidebar-card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .sidebar-card h3 {
+            color: var(--secondary-color);
+            font-size: 0.9em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Password Strength Meter */
+        .password-input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .strength-meter {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .strength-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: all 0.5s ease;
+            width: 0%;
+        }
+
+        .strength-fill.weak { background: var(--danger-color); width: 25%; }
+        .strength-fill.moderate { background: var(--warning-color); width: 50%; }
+        .strength-fill.good { background: #00b894; width: 75%; }
+        .strength-fill.strong { background: var(--safe-color); width: 100%; }
+
+        .password-feedback {
             font-size: 0.8em;
-            color: var(--matrix-color);
-            text-align: center;
-            padding: 5px;
-            border-top: 1px solid rgba(0, 255, 0, 0.2);
+            color: rgba(230, 241, 255, 0.7);
+        }
+
+        .password-feedback li {
+            margin: 4px 0;
+            list-style: none;
+        }
+
+        /* History */
+        .history-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.1);
+            font-size: 0.85em;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-item .url {
+            color: var(--text-light);
+            word-break: break-all;
+            margin-bottom: 4px;
+        }
+
+        .history-item .meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: rgba(230, 241, 255, 0.5);
+        }
+
+        .history-item .status {
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75em;
+            text-transform: uppercase;
+        }
+
+        .status.safe { background: rgba(0, 255, 0, 0.2); color: var(--safe-color); }
+        .status.warning { background: rgba(255, 215, 0, 0.2); color: var(--warning-color); }
+        .status.danger { background: rgba(255, 51, 51, 0.2); color: var(--danger-color); }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            animation: pulse 1s infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .stats-dashboard {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .stats-dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 0, 0.3);
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
-    <div class="binary-pattern"></div>
-    <div class="chat-container">
-        <div class="chat-header">
-            <h1><i class="fas fa-shield-alt"></i>CyberGuard v2.0<span class="status-indicator"></span></h1>
-            <small>SECURE COMMUNICATION CHANNEL</small>
-        </div>
-        <div class="chat-box" id="chat-box">
-            <div class="message bot-message">
-                SYSTEM INITIALIZED. Cybersecurity protocols active. How may I assist you? 🔒
+    <div class="main-container">
+        <!-- Stats Dashboard -->
+        <div class="stats-dashboard">
+            <div class="stat-card">
+                <i class="fas fa-search"></i>
+                <div class="stat-value" id="total-scans">0</div>
+                <div class="stat-label">Total Scans</div>
             </div>
-        </div>
-        <div class="encryption-indicator">
-            <i class="fas fa-lock"></i> End-to-End Encrypted | Protocol: AES-256
-        </div>
-        <div class="security-stats">
-            <div class="stat-item">
+            <div class="stat-card">
                 <i class="fas fa-shield-alt"></i>
-                <span>Threat Level: Low</span>
+                <div class="stat-value" id="safe-urls">0</div>
+                <div class="stat-label">Safe URLs</div>
             </div>
-            <div class="stat-item">
-                <i class="fas fa-wifi"></i>
-                <span>Connection: Secure</span>
+            <div class="stat-card">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div class="stat-value" id="threats-detected">0</div>
+                <div class="stat-label">Threats Found</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-flag"></i>
+                <div class="stat-value" id="reported-links">0</div>
+                <div class="stat-label">Reported</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-key"></i>
+                <div class="stat-value" id="password-checks">0</div>
+                <div class="stat-label">PW Checks</div>
             </div>
         </div>
-        <div class="input-area">
-            <div class="input-group">
-                <input type="text" id="user-input" placeholder="Enter command..." autocomplete="off">
+
+        <!-- Main Chat -->
+        <div class="chat-container">
+            <div class="chat-header">
+                <h1>
+                    <i class="fas fa-shield-alt"></i>
+                    CYBERGUARD
+                    <span class="version">v3.0</span>
+                </h1>
+                <small>AI-Powered Cybersecurity Assistant</small>
             </div>
-            <div class="action-buttons">
-                <button id="send-btn">
-                    <i class="fas fa-terminal"></i>
-                    Execute
-                </button>
-                <button id="verify-link-btn">
-                    <i class="fas fa-fingerprint"></i>
-                    Scan
-                </button>
-                <button id="report-link-btn">
-                    <i class="fas fa-radiation"></i>
-                    Report
-                </button>
+            <div class="chat-box" id="chat-box">
+                <div class="message bot-message">
+                    🛡️ <strong>CyberGuard AI Initialized</strong><br><br>
+                    Welcome! I'm your AI cybersecurity assistant. I can help you with:
+                    <br>• 🔍 Scanning URLs for threats
+                    <br>• 🔐 Analyzing password strength
+                    <br>• 🚨 Reporting suspicious links
+                    <br>• 💡 Cybersecurity advice
+                    <br><br>How can I protect you today?
+                </div>
+            </div>
+            <div class="input-area">
+                <div class="input-group">
+                    <input type="text" id="user-input" placeholder="Ask me anything about cybersecurity..." autocomplete="off">
+                </div>
+                <div class="action-buttons">
+                    <button id="send-btn" class="primary">
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                    <button id="verify-link-btn">
+                        <i class="fas fa-search"></i> Scan URL
+                    </button>
+                    <button id="report-link-btn" class="danger">
+                        <i class="fas fa-flag"></i> Report
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Password Analyzer -->
+            <div class="sidebar-card">
+                <h3><i class="fas fa-key"></i> Password Analyzer</h3>
+                <div class="password-input-group">
+                    <input type="password" id="password-input" placeholder="Enter password to check...">
+                    <button id="check-password-btn" style="padding: 8px 12px;">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+                <div class="strength-meter">
+                    <div class="strength-fill" id="strength-fill"></div>
+                </div>
+                <div id="password-result" style="font-size: 0.85em; margin-bottom: 8px;"></div>
+                <ul class="password-feedback" id="password-feedback"></ul>
+            </div>
+
+            <!-- Scan History -->
+            <div class="sidebar-card">
+                <h3><i class="fas fa-history"></i> Recent Scans</h3>
+                <div class="history-list" id="history-list">
+                    <div class="history-item" style="color: rgba(230, 241, 255, 0.5); text-align: center;">
+                        No scans yet
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Tips -->
+            <div class="sidebar-card">
+                <h3><i class="fas fa-lightbulb"></i> Security Tips</h3>
+                <ul class="password-feedback">
+                    <li>🔐 Use unique passwords for each account</li>
+                    <li>🔍 Always verify links before clicking</li>
+                    <li>📧 Be wary of urgent email requests</li>
+                    <li>🛡️ Enable two-factor authentication</li>
+                </ul>
             </div>
         </div>
     </div>
+
     <script src="app.js"></script>
 </body>
 </html>
