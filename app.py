@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 import sqlite3
 import time
-import google.generativeai as genai
+from google import genai
 import requests
 import os
 
@@ -26,7 +26,8 @@ def init_db():
 init_db()
 
 # Configure API keys
-genai.configure(api_key="AIzaSyAGu5gARK6nc-6RSDOHKgisESNhp9kWxe4")
+GEMINI_API_KEY = "AIzaSyDNPoZp_SgiK5nu-OAaNENxAuctqdrecMY"
+client = genai.Client(api_key=GEMINI_API_KEY)
 GOOGLE_SAFE_BROWSING_API_KEY = "AIzaSyC4B4MF7856AiE25w4TE9usHqzuYN0_r2k"
 
 # Serve static files
@@ -45,8 +46,10 @@ def chat():
         return jsonify({"response": "Please enter a message."})
 
     try:
-        model = genai.GenerativeModel("gemini-pro")
-        response = model.generate_content(user_message)
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=user_message
+        )
         bot_response = response.text.strip()
     except Exception as e:
         print("Error:", e)

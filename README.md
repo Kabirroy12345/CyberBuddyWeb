@@ -179,9 +179,9 @@ Link verification uses the **Google Safe Browsing API** to detect:
 
 | Contributor | Role |
 |:---:|:---:|
+| **Kabir Roy** | Lead Developer |
 | **Pulkit Agrawal** | Developer |
-| **Kabir Roy** | Developer |
-| **Team CyberBuddy** | Project Team |
+| **Sameer Chaudhary** | Developer |
 
 </div>
 
